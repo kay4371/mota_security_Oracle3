@@ -4697,7 +4697,7 @@ const bcrypt = require('bcryptjs');
 const mongoUrl = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
 const dbName = 'olukayode_sage';
 const socketIo = require('socket.io'); // Make sure to require 'socket.io'
-
+const helmet = require('helmet');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -4718,21 +4718,80 @@ const { MongoClient } = require('mongodb');
 // const { MongoClient, ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const path = require("path");
+
+
 const app = express();
 const port = process.env.PORT || 3000;
+// Set up a route for the new visitor page
+function generateUniqueCode() {
+  const timestamp = new Date().getTime();
+  const randomString = Math.random().toString(36).substring(2, 10); // Random alphanumeric string
+  const uniqueCode = `${timestamp}_${randomString}`;
+  console.log('Generated Code:', uniqueCode); // Log the generated code
+  return uniqueCode;
+}
 
-// Set the directory where the HTML files are located
-const htmlDir = path.join(__dirname, 'public');
+// Generate the code when the app is initialized
+const generatedCode = generateUniqueCode();
+
+// const options = {
+//   key: fs.readFileSync('C:\\Users\\motaSecure\\private.key'),
+//   cert: fs.readFileSync('C:\\Users\\motaSecure\\certificate.crt'),
+// };
+
+// const options = {
+//   key: fs.readFileSync('C:\\Users\\motaSecure\\private.key'),
+//   cert: fs.readFileSync('C:\\Users\\motaSecure\\certificate.crt'),
+// };
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
+app.use(helmet());
+
+
+app.use((req, res, next) => {
+  req.generatedCode = generatedCode;
+  next();
+});
+
+// Set up S3 client
+const s3 = new aws.S3({
+   accessKeyId : process.env.AWS_ACCESS_KEY_ID,
+   secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY,
+  region: "us-west-2"
+})
+
+
+// // Set up multer and S3 storage
+// const uploadS3 = () =>
+//   multer({
+//     storage: multerS3({
+//       s3,
+//       bucket: 'profile-picture-upload-youtube1',
+//       key: function (req, file, cb) {
+//         cb(null, Date.now().toString() + '-' + file.originalname);
+//       },
+//     })
+//   });
+
+  app.use(session({
+    secret: generatedCode, // Change this to a secure secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+  }));
+
+
+// // Set the directory where the HTML files are located
+// const htmlDir = path.join(__dirname, 'public');
 
 // Route for the index page
 app.get("/", (req, res) => {
     res.sendFile(path.join(htmlDir, 'index.html'));
 });
 
-// Route for the "Hello World" page
-app.get("/hello", (req, res) => {
-    res.sendFile(path.join(htmlDir, 'index.html'));
-});
 
 const server = app.listen(port, () => console.log(`Server listening on port ${port}!`));
 

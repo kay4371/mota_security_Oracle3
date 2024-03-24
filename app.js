@@ -120,166 +120,166 @@
 // let hrClients = [];
 // let securityClients = [];
 
-// //whapi token 3:S36GOqY9anD6SGA7KPynscPVxdju24fN
+// // // // //whapi token 3:S36GOqY9anD6SGA7KPynscPVxdju24fN
 
-// /////////////////////////////////////////////////////let manager, supervisor, technician;
+// // // // /////////////////////////////////////////////////////let manager, supervisor, technician;
 
-// // Function to clean and modify phone numbers
-// function cleanPhoneNumber2(phoneNumber) {
-//   // Remove any non-numeric characters
-//   const cleanedNumber = phoneNumber.replace(/\D/g, '');
+// // // // // Function to clean and modify phone numbers
+// // // // function cleanPhoneNumber2(phoneNumber) {
+// // // //   // Remove any non-numeric characters
+// // // //   const cleanedNumber = phoneNumber.replace(/\D/g, '');
   
-//   // Check if the number starts with '0'
-//   if (cleanedNumber.startsWith('0')) {
-//     // Remove the leading '0' and prepend '234'
-//     return `234${cleanedNumber.slice(1)}`;
-//   }
+// // // //   // Check if the number starts with '0'
+// // // //   if (cleanedNumber.startsWith('0')) {
+// // // //     // Remove the leading '0' and prepend '234'
+// // // //     return `234${cleanedNumber.slice(1)}`;
+// // // //   }
   
-//   // Check if the number starts with '+'
-//   if (cleanedNumber.startsWith('+')) {
-//     // Remove the '+' sign
-//     return cleanedNumber.slice(1);
-//   }
+// // // //   // Check if the number starts with '+'
+// // // //   if (cleanedNumber.startsWith('+')) {
+// // // //     // Remove the '+' sign
+// // // //     return cleanedNumber.slice(1);
+// // // //   }
   
-//   // If the number doesn't start with '0' or '+', return as is
-//   return cleanedNumber;
-// }
+// // // //   // If the number doesn't start with '0' or '+', return as is
+// // // //   return cleanedNumber;
+// // // // }
 
-// // Function to fetch token and officer details
-// async function getTokenandNumbers() {
-//   const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
-//   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// // // // // Function to fetch token and officer details
+// // // // async function getTokenandNumbers() {
+// // // //   const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
+// // // //   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-//   try {
-//     await client.connect();
-//     const db = client.db('olukayode_sage');
+// // // //   try {
+// // // //     await client.connect();
+// // // //     const db = client.db('olukayode_sage');
 
-//     // Fetch token data
-//     const otherIDData = db.collection('OtherIDs');
-//     const tokenData = await otherIDData.findOne({ idType: 'Token 1' });
+// // // //     // Fetch token data
+// // // //     const otherIDData = db.collection('OtherIDs');
+// // // //     const tokenData = await otherIDData.findOne({ idType: 'Token 1' });
 
-//     // Fetch details for manager, supervisor, and technician
-//     const Security_officer_collection = db.collection('security_officers');
-//     manager = await Security_officer_collection.findOne({ designation: /security manager/i });
-//     supervisor = await Security_officer_collection.findOne({ designation: /security supervisor/i });
-//     technician = await Security_officer_collection.findOne({ designation: /security technician/i });
+// // // //     // Fetch details for manager, supervisor, and technician
+// // // //     const Security_officer_collection = db.collection('security_officers');
+// // // //     manager = await Security_officer_collection.findOne({ designation: /security manager/i });
+// // // //     supervisor = await Security_officer_collection.findOne({ designation: /security supervisor/i });
+// // // //     technician = await Security_officer_collection.findOne({ designation: /security technician/i });
 
-//     // Clean and modify phone numbers
-//     if (manager) manager.phoneNumber = cleanPhoneNumber2(manager.phoneNumber);
-//     if (supervisor) supervisor.phoneNumber = cleanPhoneNumber2(supervisor.phoneNumber);
-//     if (technician) technician.phoneNumber = cleanPhoneNumber2(technician.phoneNumber);
+// // // //     // Clean and modify phone numbers
+// // // //     if (manager) manager.phoneNumber = cleanPhoneNumber2(manager.phoneNumber);
+// // // //     if (supervisor) supervisor.phoneNumber = cleanPhoneNumber2(supervisor.phoneNumber);
+// // // //     if (technician) technician.phoneNumber = cleanPhoneNumber2(technician.phoneNumber);
 
-//     // Log the officer details
-//     console.log("Manager Details:", manager ? `Name: ${manager.name}, Phone: ${manager.phoneNumber}, Email: ${manager.email}` : 'No manager found');
-//     console.log("Supervisor Details:", supervisor ? `Name: ${supervisor.name}, Phone: ${supervisor.phoneNumber}, Email: ${supervisor.email}` : 'No supervisor found');
-//     console.log("Technician Details:", technician ? `Name: ${technician.name}, Phone: ${technician.phoneNumber}, Email: ${technician.email}` : 'No technician found');
+// // // //     // Log the officer details
+// // // //     console.log("Manager Details:", manager ? `Name: ${manager.name}, Phone: ${manager.phoneNumber}, Email: ${manager.email}` : 'No manager found');
+// // // //     console.log("Supervisor Details:", supervisor ? `Name: ${supervisor.name}, Phone: ${supervisor.phoneNumber}, Email: ${supervisor.email}` : 'No supervisor found');
+// // // //     console.log("Technician Details:", technician ? `Name: ${technician.name}, Phone: ${technician.phoneNumber}, Email: ${technician.email}` : 'No technician found');
 
-//     // Close the database connection
-//     await client.close();
+// // // //     // Close the database connection
+// // // //     await client.close();
 
-//     // Return token and officer details
-//     return {
-//       // token: tokenData && tokenData.idNumber ? tokenData.idNumber : null,
-//       manager: manager ? { name: manager.name, phone: manager.phoneNumber, email: manager.email } : null,
-//       supervisor: supervisor ? { name: supervisor.name, phone: supervisor.phoneNumber, email: supervisor.email } : null,
-//       technician: technician ? { name: technician.name, phone: technician.phoneNumber, email: technician.email } : null,
-//     };
-//   } catch (error) {
-//     console.error('An error occurred:', error);
-//     return null;
-//   }
-// }
+// // // //     // Return token and officer details
+// // // //     return {
+// // // //       // token: tokenData && tokenData.idNumber ? tokenData.idNumber : null,
+// // // //       manager: manager ? { name: manager.name, phone: manager.phoneNumber, email: manager.email } : null,
+// // // //       supervisor: supervisor ? { name: supervisor.name, phone: supervisor.phoneNumber, email: supervisor.email } : null,
+// // // //       technician: technician ? { name: technician.name, phone: technician.phoneNumber, email: technician.email } : null,
+// // // //     };
+// // // //   } catch (error) {
+// // // //     console.error('An error occurred:', error);
+// // // //     return null;
+// // // //   }
+// // // // }
 
-// // Call the function to fetch token and officer details
-// getTokenandNumbers()
-//   .then((tokenAndNumbers) => {
-//     console.log("officer details:", tokenAndNumbers);
-//     // Start the server here
-//     // Replace this with your server start logic
-//   })
-//   .catch((error) => {
-//     console.error("An error occurred:", error);
-//   });
+// // // // // Call the function to fetch token and officer details
+// // // // getTokenandNumbers()
+// // // //   .then((tokenAndNumbers) => {
+// // // //     console.log("officer details:", tokenAndNumbers);
+// // // //     // Start the server here
+// // // //     // Replace this with your server start logic
+// // // //   })
+// // // //   .catch((error) => {
+// // // //     console.error("An error occurred:", error);
+// // // //   });
 
 
-//   let token1Data, groupIDData,groupId;
+// // // //   let token1Data, groupIDData,groupId;
 
-//   // Function to extract other details
-//   async function extractOtherDetails() {
-//     const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
-//     const client = new MongoClient(uri);
+// // // //   // Function to extract other details
+// // // //   async function extractOtherDetails() {
+// // // //     const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
+// // // //     const client = new MongoClient(uri);
   
-//     try {
-//       await client.connect();
+// // // //     try {
+// // // //       await client.connect();
   
-//       const database = client.db('olukayode_sage');
-//       const driversHistoryCollection = database.collection('OtherIDs');
+// // // //       const database = client.db('olukayode_sage');
+// // // //       const driversHistoryCollection = database.collection('OtherIDs');
   
-//       // Fetch the required data from the database
-//       token1Data = await driversHistoryCollection.findOne({ idType: 'Token 1' });
-//       groupIDData = await driversHistoryCollection.findOne({ idType: 'GroupID' });
+// // // //       // Fetch the required data from the database
+// // // //       token1Data = await driversHistoryCollection.findOne({ idType: 'Token 1' });
+// // // //       groupIDData = await driversHistoryCollection.findOne({ idType: 'GroupID' });
   
-//       // Log the retrieved data
-//       console.log('Extracted Details:');
-//       console.log('Token1:', token1Data.idNumber);
-//       console.log('GroupID:', groupIDData.idNumber);
+// // // //       // Log the retrieved data
+// // // //       console.log('Extracted Details:');
+// // // //       console.log('Token1:', token1Data.idNumber);
+// // // //       console.log('GroupID:', groupIDData.idNumber);
   
-//       // Close the database connection
-//       await client.close();
+// // // //       // Close the database connection
+// // // //       await client.close();
   
-//       // Return the extracted data
-//       return {
-//         token1: token1Data.idNumber,
-//         groupID: groupIDData.idNumber
-//       };
-//     } catch (error) {
-//       console.error('An error occurred:', error);
-//       throw new Error('An error occurred while extracting details');
-//     }
-//   }
+// // // //       // Return the extracted data
+// // // //       return {
+// // // //         token1: token1Data.idNumber,
+// // // //         groupID: groupIDData.idNumber
+// // // //       };
+// // // //     } catch (error) {
+// // // //       console.error('An error occurred:', error);
+// // // //       throw new Error('An error occurred while extracting details');
+// // // //     }
+// // // //   }
   
-//   // Function to start the server and extract other details
-//   async function startServerAndExtractDetails() {
-//     try {
-//       // Call the function to extract other details
-//       const extractedDetails = await extractOtherDetails();
-//       console.log("Extracted details:", extractedDetails);
+// // // //   // Function to start the server and extract other details
+// // // //   async function startServerAndExtractDetails() {
+// // // //     try {
+// // // //       // Call the function to extract other details
+// // // //       const extractedDetails = await extractOtherDetails();
+// // // //       console.log("Extracted details:", extractedDetails);
   
-//       // Start the server here
-//       // Replace this with your server start logic
+// // // //       // Start the server here
+// // // //       // Replace this with your server start logic
   
-//       // Access the extracted details
-//       const groupId = extractedDetails.groupID; // Corrected variable name
-//       const token = extractedDetails.token1; // Replace with your token
+// // // //       // Access the extracted details
+// // // //       const groupId = extractedDetails.groupID; // Corrected variable name
+// // // //       const token = extractedDetails.token1; // Replace with your token
   
-//       // Now you can use groupId and token
-//     } catch (error) {
-//       console.error("An error occurred:", error);
-//     }
-//   }
+// // // //       // Now you can use groupId and token
+// // // //     } catch (error) {
+// // // //       console.error("An error occurred:", error);
+// // // //     }
+// // // //   }
   
-//   // Call the function to start the server and extract other details
-//   startServerAndExtractDetails();
+// // // //   // Call the function to start the server and extract other details
+// // // //   startServerAndExtractDetails();
   
-//   // const token2 = "notWeiRdf4mmY2CWf1Lk1Iz1W7hysaCX"; // Replace with your actual token
+// // // //   // const token2 = "notWeiRdf4mmY2CWf1Lk1Iz1W7hysaCX"; // Replace with your actual token
 
-// function normalizePhoneNumber(phoneNumber) {
-//   const numericPhoneNumber = phoneNumber.replace(/\D/g, '');
+// // // // function normalizePhoneNumber(phoneNumber) {
+// // // //   const numericPhoneNumber = phoneNumber.replace(/\D/g, '');
 
-//   if (numericPhoneNumber.startsWith('0')) {
-//     return `+234${numericPhoneNumber.slice(1)}`;
-//   } else {
-//     return `+234${numericPhoneNumber}`;
-//   }
-// }
+// // // //   if (numericPhoneNumber.startsWith('0')) {
+// // // //     return `+234${numericPhoneNumber.slice(1)}`;
+// // // //   } else {
+// // // //     return `+234${numericPhoneNumber}`;
+// // // //   }
+// // // // }
 
 
-// const generateVerificationCode = () => {
-//   const codeLength = 4; // Adjust the code length as needed
-//   const min = Math.pow(10, codeLength - 1);
-//   const max = Math.pow(10, codeLength) - 1;
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// };
+// // // // const generateVerificationCode = () => {
+// // // //   const codeLength = 4; // Adjust the code length as needed
+// // // //   const min = Math.pow(10, codeLength - 1);
+// // // //   const max = Math.pow(10, codeLength) - 1;
+// // // //   return Math.floor(Math.random() * (max - min + 1)) + min;
+// // // // };
 
 
 
@@ -4808,6 +4808,168 @@ const uploadS3 = () =>
 app.get("/", (req, res) => {
     res.sendFile(path.join(htmlDir, 'index.html'));
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//284
+/////////////////////////////////////////////////////let manager, supervisor, technician;
+
+// Function to clean and modify phone numbers
+function cleanPhoneNumber2(phoneNumber) {
+  // Remove any non-numeric characters
+  const cleanedNumber = phoneNumber.replace(/\D/g, '');
+  
+  // Check if the number starts with '0'
+  if (cleanedNumber.startsWith('0')) {
+    // Remove the leading '0' and prepend '234'
+    return `234${cleanedNumber.slice(1)}`;
+  }
+  
+  // Check if the number starts with '+'
+  if (cleanedNumber.startsWith('+')) {
+    // Remove the '+' sign
+    return cleanedNumber.slice(1);
+  }
+  
+  // If the number doesn't start with '0' or '+', return as is
+  return cleanedNumber;
+}
+
+// Function to fetch token and officer details
+async function getTokenandNumbers() {
+  const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const db = client.db('olukayode_sage');
+
+    // Fetch token data
+    const otherIDData = db.collection('OtherIDs');
+    const tokenData = await otherIDData.findOne({ idType: 'Token 1' });
+
+    // Fetch details for manager, supervisor, and technician
+    const Security_officer_collection = db.collection('security_officers');
+    manager = await Security_officer_collection.findOne({ designation: /security manager/i });
+    supervisor = await Security_officer_collection.findOne({ designation: /security supervisor/i });
+    technician = await Security_officer_collection.findOne({ designation: /security technician/i });
+
+    // Clean and modify phone numbers
+    if (manager) manager.phoneNumber = cleanPhoneNumber2(manager.phoneNumber);
+    if (supervisor) supervisor.phoneNumber = cleanPhoneNumber2(supervisor.phoneNumber);
+    if (technician) technician.phoneNumber = cleanPhoneNumber2(technician.phoneNumber);
+
+    // Log the officer details
+    console.log("Manager Details:", manager ? `Name: ${manager.name}, Phone: ${manager.phoneNumber}, Email: ${manager.email}` : 'No manager found');
+    console.log("Supervisor Details:", supervisor ? `Name: ${supervisor.name}, Phone: ${supervisor.phoneNumber}, Email: ${supervisor.email}` : 'No supervisor found');
+    console.log("Technician Details:", technician ? `Name: ${technician.name}, Phone: ${technician.phoneNumber}, Email: ${technician.email}` : 'No technician found');
+
+    // Close the database connection
+    await client.close();
+
+    // Return token and officer details
+    return {
+      // token: tokenData && tokenData.idNumber ? tokenData.idNumber : null,
+      manager: manager ? { name: manager.name, phone: manager.phoneNumber, email: manager.email } : null,
+      supervisor: supervisor ? { name: supervisor.name, phone: supervisor.phoneNumber, email: supervisor.email } : null,
+      technician: technician ? { name: technician.name, phone: technician.phoneNumber, email: technician.email } : null,
+    };
+  } catch (error) {
+    console.error('An error occurred:', error);
+    return null;
+  }
+}
+
+// Call the function to fetch token and officer details
+getTokenandNumbers()
+  .then((tokenAndNumbers) => {
+    console.log("officer details:", tokenAndNumbers);
+    // Start the server here
+    // Replace this with your server start logic
+  })
+  .catch((error) => {
+    console.error("An error occurred:", error);
+  });
+
+
+  let token1Data, groupIDData,groupId;
+
+  // Function to extract other details
+  async function extractOtherDetails() {
+    const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+  
+      const database = client.db('olukayode_sage');
+      const driversHistoryCollection = database.collection('OtherIDs');
+  
+      // Fetch the required data from the database
+      token1Data = await driversHistoryCollection.findOne({ idType: 'Token 1' });
+      groupIDData = await driversHistoryCollection.findOne({ idType: 'GroupID' });
+  
+      // Log the retrieved data
+      console.log('Extracted Details:');
+      console.log('Token1:', token1Data.idNumber);
+      console.log('GroupID:', groupIDData.idNumber);
+  
+      // Close the database connection
+      await client.close();
+  
+      // Return the extracted data
+      return {
+        token1: token1Data.idNumber,
+        groupID: groupIDData.idNumber
+      };
+    } catch (error) {
+      console.error('An error occurred:', error);
+      throw new Error('An error occurred while extracting details');
+    }
+  }
+  
+  // Function to start the server and extract other details
+  async function startServerAndExtractDetails() {
+    try {
+      // Call the function to extract other details
+      const extractedDetails = await extractOtherDetails();
+      console.log("Extracted details:", extractedDetails);
+  
+      // Start the server here
+      // Replace this with your server start logic
+  
+      // Access the extracted details
+      const groupId = extractedDetails.groupID; // Corrected variable name
+      const token = extractedDetails.token1; // Replace with your token
+  
+      // Now you can use groupId and token
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+  
+  // Call the function to start the server and extract other details
+  startServerAndExtractDetails();
+  
+  // const token2 = "notWeiRdf4mmY2CWf1Lk1Iz1W7hysaCX"; // Replace with your actual token
+
+function normalizePhoneNumber(phoneNumber) {
+  const numericPhoneNumber = phoneNumber.replace(/\D/g, '');
+
+  if (numericPhoneNumber.startsWith('0')) {
+    return `+234${numericPhoneNumber.slice(1)}`;
+  } else {
+    return `+234${numericPhoneNumber}`;
+  }
+}
+
+
+const generateVerificationCode = () => {
+  const codeLength = 4; // Adjust the code length as needed
+  const min = Math.pow(10, codeLength - 1);
+  const max = Math.pow(10, codeLength) - 1;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 
 
 const server = app.listen(port, () => console.log(`Server listening on port ${port}!`));

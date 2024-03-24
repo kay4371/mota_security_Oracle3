@@ -4682,8 +4682,41 @@
 //   console.log(`Server listening on port ${port}`);
 
 // });
+require('dotenv').config();
+const natural = require('natural');
+const tokenizer = new natural.WordTokenizer();
+const classifier = new natural.BayesClassifier(); // Initialize a Bayesian classifier
+const sanitizeHtml = require('sanitize-html'); // Import sanitize-html library
+const session = require('express-session');
+const pdf = require('html-pdf');
+const PDFDocument = require('pdfkit');
+const fetch = require('node-fetch');
+const FormData = require('form-data');
+const axios = require('axios');
+const bcrypt = require('bcryptjs');
+const mongoUrl = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority';
+const dbName = 'olukayode_sage';
+const socketIo = require('socket.io'); // Make sure to require 'socket.io'
 
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
+const bodyParser = require('body-parser');
+const https = require('https');
+const WebSocket = require('ws');
+const { Configuration, OpenAIApi } = require("openai");
+const { PDFExtract } = require('pdf.js-extract');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const secretKey = crypto.randomBytes(32).toString('hex');
+const { S3Client } = require;
+const aws = require("aws-sdk");
+var multer = require("multer");
+var multerS3 = require("multer-s3-v2");
+// const ObjectId = require('mongodb').ObjectId;
+const { ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
+// const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
 const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;

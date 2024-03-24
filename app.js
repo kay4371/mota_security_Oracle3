@@ -4744,10 +4744,13 @@ const generatedCode = generateUniqueCode();
 //   cert: fs.readFileSync('C:\\Users\\motaSecure\\certificate.crt'),
 // };
 
-const options = {
-    key: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\private.key'),
-    cert: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\certificate.crt'),
-  };
+
+
+
+// const options = {
+//     key: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\private.key'),
+//     cert: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\certificate.crt'),
+//   };
   
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

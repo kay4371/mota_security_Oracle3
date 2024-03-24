@@ -4744,7 +4744,11 @@ const generatedCode = generateUniqueCode();
 //   cert: fs.readFileSync('C:\\Users\\motaSecure\\certificate.crt'),
 // };
 
-
+const options = {
+    key: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\private.key'),
+    cert: fs.readFileSync('C:\\Users\\Public\\motaSecure_test\\certificate.crt'),
+  };
+  
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
@@ -4764,17 +4768,17 @@ const s3 = new aws.S3({
 })
 
 
-// // Set up multer and S3 storage
-// const uploadS3 = () =>
-//   multer({
-//     storage: multerS3({
-//       s3,
-//       bucket: 'profile-picture-upload-youtube1',
-//       key: function (req, file, cb) {
-//         cb(null, Date.now().toString() + '-' + file.originalname);
-//       },
-//     })
-//   });
+// Set up multer and S3 storage
+const uploadS3 = () =>
+  multer({
+    storage: multerS3({
+      s3,
+      bucket: 'profile-picture-upload-youtube1',
+      key: function (req, file, cb) {
+        cb(null, Date.now().toString() + '-' + file.originalname);
+      },
+    })
+  });
 
   app.use(session({
     secret: generatedCode, // Change this to a secure secret
@@ -4783,11 +4787,21 @@ const s3 = new aws.S3({
     cookie: { secure: false } // Set to true if using HTTPS
   }));
 
+    // Set up MongoDB connection
+    let registrationDetails = []; // Define a variable to store registration details
+    const uri = 'mongodb+srv://OlukayodeUser:Kayode4371@cluster0.zds6pi9.mongodb.net/olukayode_sage?retryWrites=true&w=majority'
+    const client = new MongoClient(uri);
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    
+    
+    const wss = new WebSocket.Server({ port: 8080});
+    // const io = socketIo(server); // Pass your server instance to initialize socket.io
+    
+    // Store connected clients for different purposes
+    let hrClients = [];
+    let securityClients = [];
 
-// // Set the directory where the HTML files are located
-// const htmlDir = path.join(__dirname, 'public');
 
-// Route for the index page
 app.get("/", (req, res) => {
     res.sendFile(path.join(htmlDir, 'index.html'));
 });

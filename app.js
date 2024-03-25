@@ -281,380 +281,370 @@
 // // // //   return Math.floor(Math.random() * (max - min + 1)) + min;
 // // // // };
 
+///////////////////////////////////////////////////
+
+// // // // // // // Import required modules
+// // // // // // const jwt = require('jsonwebtoken');
+
+// // // // // // Authentication middleware
+// // // // // const authenticateUser = (req, res, next) => {
+// // // // //   const token = req.header('Authorization');
+
+// // // // //   if (!token) {
+// // // // //     return res.status(401).json({ message: 'Unauthorized - Missing token' });
+// // // // //   }
+
+// // // // //   try {
+// // // // //     const decoded = jwt.verify(token, secretKey);
+// // // // //     req.user = decoded.user;
+// // // // //     next();
+// // // // //   } catch (error) {
+// // // // //     console.error(error);
+// // // // //     return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+// // // // //   }
+// // // // // };
+
+// // // // // // Authorization middleware
+// // // // // const authorizeUser = (roles) => {
+// // // // //   return (req, res, next) => {
+// // // // //     if (roles.includes(req.user.role)) {
+// // // // //       next();
+// // // // //     } else {
+// // // // //       return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
+// // // // //     }
+// // // // //   };
+// // // // // };
+
+// // // // // module.exports = { authenticateUser, authorizeUser };
 
 
-// // // // Import required modules
-// // // const jwt = require('jsonwebtoken');
+// // // // const verifyCode = (enteredCode, generatedCode) => {
+// // // //   return enteredCode.toString() === generatedCode.toString();
+// // // // };
 
-// // // Authentication middleware
-// // const authenticateUser = (req, res, next) => {
-// //   const token = req.header('Authorization');
+// // // // const authenticateUser = (req, res, next) => {
+// // // //   const token = req.header('Authorization');
 
-// //   if (!token) {
-// //     return res.status(401).json({ message: 'Unauthorized - Missing token' });
-// //   }
+// // // //   if (!token) {
+// // // //     return res.status(401).json({ message: 'Unauthorized - Missing token' });
+// // // //   }
 
-// //   try {
-// //     const decoded = jwt.verify(token, secretKey);
-// //     req.user = decoded.user;
-// //     next();
-// //   } catch (error) {
-// //     console.error(error);
-// //     return res.status(401).json({ message: 'Unauthorized - Invalid token' });
-// //   }
-// // };
+// // // //   try {
+// // // //     const decoded = jwt.verify(token, secretKey);
+// // // //     req.user = decoded.user;
+// // // //     next();
+// // // //   } catch (error) {
+// // // //     console.error(error);
+// // // //     return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+// // // //   }
+// // // // };
 
-// // // Authorization middleware
-// // const authorizeUser = (roles) => {
-// //   return (req, res, next) => {
-// //     if (roles.includes(req.user.role)) {
-// //       next();
-// //     } else {
-// //       return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
-// //     }
-// //   };
-// // };
-
-// // module.exports = { authenticateUser, authorizeUser };
+// // // // // Authorization middleware
+// // // // const authorizeUser = (roles) => {
+// // // //   return (req, res, next) => {
+// // // //     if (roles.includes(req.user.role)) {
+// // // //       next();
+// // // //     } else {
+// // // //       return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
+// // // //     }
+// // // //   };
+// // // // };
 
 
-// const verifyCode = (enteredCode, generatedCode) => {
-//   return enteredCode.toString() === generatedCode.toString();
-// };
+// // // // // Sample users with configured roles and phone numbers
+// // // // const configuredUsers = [
+// // // //   { phoneNumber: '1234567890', configuredRole: 'receptionist' },
+// // // //   { phoneNumber: '9876543210', configuredRole: 'security' },
+// // // //   // Add more users as needed
+// // // // ];
 
-// const authenticateUser = (req, res, next) => {
-//   const token = req.header('Authorization');
-
-//   if (!token) {
-//     return res.status(401).json({ message: 'Unauthorized - Missing token' });
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, secretKey);
-//     req.user = decoded.user;
-//     next();
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(401).json({ message: 'Unauthorized - Invalid token' });
-//   }
-// };
-
-// // Authorization middleware
-// const authorizeUser = (roles) => {
-//   return (req, res, next) => {
-//     if (roles.includes(req.user.role)) {
-//       next();
-//     } else {
-//       return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
-//     }
-//   };
-// };
-
-
-// // Sample users with configured roles and phone numbers
-// const configuredUsers = [
-//   { phoneNumber: '1234567890', configuredRole: 'receptionist' },
-//   { phoneNumber: '9876543210', configuredRole: 'security' },
-//   // Add more users as needed
-// ];
-
-// ///////with harshing////////////////////////////////////////
-// // Check login status endpoint
-// app.get('/check_login_status', (req, res) => {
-//   // Check if the user is logged in based on the session
-//   if (req.session && req.session.userId) {
-//       // User is logged in
-//       res.status(200).send('User logged in');
-//   } else {
-//       // User is not logged in
-//       res.status(401).send('User not logged in');
-//   }
-// });
-
-
-
-// // Logout endpoint
-// app.post('/logout', (req, res) => {
-//   // Clear session data
-//   req.session.destroy(err => {
-//       if (err) {
-//           console.error('Error destroying session:', err);
-//           res.status(500).json({ message: 'Error logging out' });
-//       } else {
-//           // Respond with a success message
-//           res.status(200).json({ message: 'Logout successful' });
-//       }
-//   });
-// });
-
-
-// app.post('/register', async (req, res) => {
-//   console.log('Received Registration Request:', req.body);
-
-//   const { phoneNumber, selectedRole, verificationCode, name, email, password, confirmPassword } = req.body;
-
-//   if (!phoneNumber || !selectedRole || !name || !email || !password || !confirmPassword) {
-//     console.log('Validation Failed - Missing Parameters');
-//     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
-//   }
-
-//   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-
-//   try {
-//     await client.connect();
-//     const db = client.db("olukayode_sage");
-//     const collection = db.collection('user_config_databse');
-//     const collection2 = db.collection('registered_user_config_database');
-//     const userConfig = await collection.findOne({ phoneNumber });
-
-//     if (!userConfig) {
-//       console.log('Access Denied - Phone number not configured for any role');
-//       return res.status(403).json({ message: 'Access Denied - Phone number not configured for any role' });
-//     }
-
-//     if (selectedRole !== userConfig.configuredRole) {
-//       console.log('Access Denied - Invalid account type');
-//       return res.status(403).json({ message: 'Access Denied - Invalid account type' });
-//     }
-
-//     console.log("Entered code:", verificationCode);
-//     console.log("Generated code:", globalVerificationCode);
-
-//     // Add more logging to see the comparison result
-//     const isValidVerificationCode = verifyCode(verificationCode, globalVerificationCode);
-//     console.log('Is Valid Verification Code:', isValidVerificationCode);
-
-//     if (!isValidVerificationCode) {
-//       console.log('Access Denied - Invalid verification code');
-//       return res.status(403).json({ message: 'Access Denied - Invalid verification code' });
-//     }
-
-//     // Hash the password before storing it in the database
-//     const hashedPassword = await bcrypt.hash(password, 10); // Use an appropriate saltRounds value
-
-//     // Save user details along with the hashed password in the database
-//     const result = await collection2.insertOne({
-//       _id: new ObjectId(),
-//       name,
-//       email,
-//       phoneNumber,
-//       configuredRole: selectedRole,
-//       configured: true,
-//       passwordHash: hashedPassword,
-//     });
-
-//     const token = jwt.sign({ phoneNumber, selectedRole }, secretKey, { expiresIn: '7m' });
-//     console.log('Registration successful - Token:', token);
-//     res.status(200).json({ message: 'Registration successful', token, verificationCode: globalVerificationCode });
-//     // res.redirect('/index.html'); 
-//   } catch (error) {
-//     console.error(error);
-//     // res.status(500).json({ message: 'Error registering user' });
-//   } finally {
-//     await client.close();
-//   }
-// });
+// // // // ///////with harshing////////////////////////////////////////
+// // // // // Check login status endpoint
+// // // // app.get('/check_login_status', (req, res) => {
+// // // //   // Check if the user is logged in based on the session
+// // // //   if (req.session && req.session.userId) {
+// // // //       // User is logged in
+// // // //       res.status(200).send('User logged in');
+// // // //   } else {
+// // // //       // User is not logged in
+// // // //       res.status(401).send('User not logged in');
+// // // //   }
+// // // // });
 
 
 
+// // // // // Logout endpoint
+// // // // app.post('/logout', (req, res) => {
+// // // //   // Clear session data
+// // // //   req.session.destroy(err => {
+// // // //       if (err) {
+// // // //           console.error('Error destroying session:', err);
+// // // //           res.status(500).json({ message: 'Error logging out' });
+// // // //       } else {
+// // // //           // Respond with a success message
+// // // //           res.status(200).json({ message: 'Logout successful' });
+// // // //       }
+// // // //   });
+// // // // });
 
-// app.post('/configureUserAccount', async (req, res) => {
-//   const { phoneNumber, configuredRole } = req.body;
 
-//   // Validate input
-//   if (!phoneNumber || !configuredRole) {
-//     console.log('Validation Failed - Missing Parameters');
-//     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
-//   }
+// // // // app.post('/register', async (req, res) => {
+// // // //   console.log('Received Registration Request:', req.body);
 
-//   // Normalize the phone number before processing
-//   const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // Remove non-numeric characters
-//   const normalizedPhoneNumber = cleanedPhoneNumber.startsWith('0') ? `+234${cleanedPhoneNumber.slice(1)}` : `+234${cleanedPhoneNumber}`;
+// // // //   const { phoneNumber, selectedRole, verificationCode, name, email, password, confirmPassword } = req.body;
 
-//   // Create a new MongoClient
-//   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+// // // //   if (!phoneNumber || !selectedRole || !name || !email || !password || !confirmPassword) {
+// // // //     console.log('Validation Failed - Missing Parameters');
+// // // //     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+// // // //   }
 
-//   try {
-//     // Connect to MongoDB
-//     await client.connect();
+// // // //   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
-//     // Select the database and collection
-//     const db = client.db(dbName);
-//     const collectionName = 'user_config_databse'; // Replace with your collection name
-//     const collection = db.collection(collectionName);
+// // // //   try {
+// // // //     await client.connect();
+// // // //     const db = client.db("olukayode_sage");
+// // // //     const collection = db.collection('user_config_databse');
+// // // //     const collection2 = db.collection('registered_user_config_database');
+// // // //     const userConfig = await collection.findOne({ phoneNumber });
 
-//     // Check if the user is already configured
-//     const existingUser = await collection.findOne({ phoneNumber: normalizedPhoneNumber });
+// // // //     if (!userConfig) {
+// // // //       console.log('Access Denied - Phone number not configured for any role');
+// // // //       return res.status(403).json({ message: 'Access Denied - Phone number not configured for any role' });
+// // // //     }
 
-//     if (existingUser) {
-//       return res.status(400).json({ message: 'Bad Request - Phone number already configured for ' + existingUser.configuredRole });
-//     }
+// // // //     if (selectedRole !== userConfig.configuredRole) {
+// // // //       console.log('Access Denied - Invalid account type');
+// // // //       return res.status(403).json({ message: 'Access Denied - Invalid account type' });
+// // // //     }
 
-//     // Save user configuration status to MongoDB
-//     await collection.insertOne({ phoneNumber: normalizedPhoneNumber, configuredRole, configured: true });
+// // // //     console.log("Entered code:", verificationCode);
+// // // //     console.log("Generated code:", globalVerificationCode);
 
-//     res.status(200).json({ message: 'User account configured successfully' });
+// // // //     // Add more logging to see the comparison result
+// // // //     const isValidVerificationCode = verifyCode(verificationCode, globalVerificationCode);
+// // // //     console.log('Is Valid Verification Code:', isValidVerificationCode);
+
+// // // //     if (!isValidVerificationCode) {
+// // // //       console.log('Access Denied - Invalid verification code');
+// // // //       return res.status(403).json({ message: 'Access Denied - Invalid verification code' });
+// // // //     }
+
+// // // //     // Hash the password before storing it in the database
+// // // //     const hashedPassword = await bcrypt.hash(password, 10); // Use an appropriate saltRounds value
+
+// // // //     // Save user details along with the hashed password in the database
+// // // //     const result = await collection2.insertOne({
+// // // //       _id: new ObjectId(),
+// // // //       name,
+// // // //       email,
+// // // //       phoneNumber,
+// // // //       configuredRole: selectedRole,
+// // // //       configured: true,
+// // // //       passwordHash: hashedPassword,
+// // // //     });
+
+// // // //     const token = jwt.sign({ phoneNumber, selectedRole }, secretKey, { expiresIn: '7m' });
+// // // //     console.log('Registration successful - Token:', token);
+// // // //     res.status(200).json({ message: 'Registration successful', token, verificationCode: globalVerificationCode });
+// // // //     // res.redirect('/index.html'); 
+// // // //   } catch (error) {
+// // // //     console.error(error);
+// // // //     // res.status(500).json({ message: 'Error registering user' });
+// // // //   } finally {
+// // // //     await client.close();
+// // // //   }
+// // // // });
+
+
+
+
+// // // // app.post('/configureUserAccount', async (req, res) => {
+// // // //   const { phoneNumber, configuredRole } = req.body;
+
+// // // //   // Validate input
+// // // //   if (!phoneNumber || !configuredRole) {
+// // // //     console.log('Validation Failed - Missing Parameters');
+// // // //     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+// // // //   }
+
+// // // //   // Normalize the phone number before processing
+// // // //   const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // Remove non-numeric characters
+// // // //   const normalizedPhoneNumber = cleanedPhoneNumber.startsWith('0') ? `+234${cleanedPhoneNumber.slice(1)}` : `+234${cleanedPhoneNumber}`;
+
+// // // //   // Create a new MongoClient
+// // // //   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// // // //   try {
+// // // //     // Connect to MongoDB
+// // // //     await client.connect();
+
+// // // //     // Select the database and collection
+// // // //     const db = client.db(dbName);
+// // // //     const collectionName = 'user_config_databse'; // Replace with your collection name
+// // // //     const collection = db.collection(collectionName);
+
+// // // //     // Check if the user is already configured
+// // // //     const existingUser = await collection.findOne({ phoneNumber: normalizedPhoneNumber });
+
+// // // //     if (existingUser) {
+// // // //       return res.status(400).json({ message: 'Bad Request - Phone number already configured for ' + existingUser.configuredRole });
+// // // //     }
+
+// // // //     // Save user configuration status to MongoDB
+// // // //     await collection.insertOne({ phoneNumber: normalizedPhoneNumber, configuredRole, configured: true });
+
+// // // //     res.status(200).json({ message: 'User account configured successfully' });
   
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Error configuring user account' });
-//   } finally {
-//     // Close the MongoDB connection
-//     await client.close();
-//   }
-// });
+// // // //   } catch (error) {
+// // // //     console.error(error);
+// // // //     res.status(500).json({ message: 'Error configuring user account' });
+// // // //   } finally {
+// // // //     // Close the MongoDB connection
+// // // //     await client.close();
+// // // //   }
+// // // // });
 
 
 
 
-// let globalVerificationCode = "";
+// // // // let globalVerificationCode = "";
 
-// // Move the function to the global scope
-// const generateVerificationCode2 = () => {
-//   const codeLength = 4; // Adjust the code length as needed
-//   const min = Math.pow(10, codeLength - 1);
-//   const max = Math.pow(10, codeLength) - 1;
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// };
+// // // // // Move the function to the global scope
+// // // // const generateVerificationCode2 = () => {
+// // // //   const codeLength = 4; // Adjust the code length as needed
+// // // //   const min = Math.pow(10, codeLength - 1);
+// // // //   const max = Math.pow(10, codeLength) - 1;
+// // // //   return Math.floor(Math.random() * (max - min + 1)) + min;
+// // // // };
 
-// app.post('/generateVerificationCode', async (req, res) => {
-//   // Log the received parameters for debugging
-//   console.log('Received Parameters:', req.body);
+// // // // app.post('/generateVerificationCode', async (req, res) => {
+// // // //   // Log the received parameters for debugging
+// // // //   console.log('Received Parameters:', req.body);
 
-//   const { phoneNumber, verificationCode, name, email, password, confirmPassword, role } = req.body;
+// // // //   const { phoneNumber, verificationCode, name, email, password, confirmPassword, role } = req.body;
 
-//   // Validate input
-//   if (!phoneNumber || !name || !email || !password || !confirmPassword || !role) {
-//     console.log('Validation Failed - Missing Parameters');
-//     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
-//   }
+// // // //   // Validate input
+// // // //   if (!phoneNumber || !name || !email || !password || !confirmPassword || !role) {
+// // // //     console.log('Validation Failed - Missing Parameters');
+// // // //     return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+// // // //   }
 
-//   // Check if password matches confirm password
-//   if (password !== confirmPassword) {
-//     console.log('Validation Failed - Passwords do not match');
-//     return res.status(400).json({ message: 'Bad Request - Passwords do not match' });
-//   }
+// // // //   // Check if password matches confirm password
+// // // //   if (password !== confirmPassword) {
+// // // //     console.log('Validation Failed - Passwords do not match');
+// // // //     return res.status(400).json({ message: 'Bad Request - Passwords do not match' });
+// // // //   }
 
-//   // Create a new MongoClient
-//   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+// // // //   // Create a new MongoClient
+// // // //   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
-//   try {
-//     // Connect to MongoDB
-//     await client.connect();
-//     const database = client.db('olukayode_sage');
-//     const collection = database.collection('user_config_databse');
+// // // //   try {
+// // // //     // Connect to MongoDB
+// // // //     await client.connect();
+// // // //     const database = client.db('olukayode_sage');
+// // // //     const collection = database.collection('user_config_databse');
 
-//     // Check if the user is configured
-//     const user = await collection.findOne({ phoneNumber, configured: true });
+// // // //     // Check if the user is configured
+// // // //     const user = await collection.findOne({ phoneNumber, configured: true });
 
-//     if (!user) {
-//       console.log('User not configured. Cannot generate verification code.');
-//       return res.status(400).json({ message: 'Bad Request - User not configured' });
-//     }
+// // // //     if (!user) {
+// // // //       console.log('User not configured. Cannot generate verification code.');
+// // // //       return res.status(400).json({ message: 'Bad Request - User not configured' });
+// // // //     }
 
-//     // Extract the first name or the first word of the name
-//     const firstName = name.split(' ')[0];
+// // // //     // Extract the first name or the first word of the name
+// // // //     const firstName = name.split(' ')[0];
 
-//     // Check if phoneNumber is a string before attempting to clean and format it
-//     const cleanAndFormatPhoneNumber2 = (phoneNumber) => {
-//       if (typeof phoneNumber !== 'string') {
-//         console.error('Invalid phoneNumber:', phoneNumber);
-//         return phoneNumber;
-//       }
+// // // //     // Check if phoneNumber is a string before attempting to clean and format it
+// // // //     const cleanAndFormatPhoneNumber2 = (phoneNumber) => {
+// // // //       if (typeof phoneNumber !== 'string') {
+// // // //         console.error('Invalid phoneNumber:', phoneNumber);
+// // // //         return phoneNumber;
+// // // //       }
 
-//       const cleanedNumber = phoneNumber.replace(/\D/g, '');
-//       const formattedNumber = cleanedNumber.startsWith('234') ? cleanedNumber : `234${cleanedNumber.slice(1)}`;
-//       return formattedNumber;
-//     };
+// // // //       const cleanedNumber = phoneNumber.replace(/\D/g, '');
+// // // //       const formattedNumber = cleanedNumber.startsWith('234') ? cleanedNumber : `234${cleanedNumber.slice(1)}`;
+// // // //       return formattedNumber;
+// // // //     };
 
-//     const formattedNumber = cleanAndFormatPhoneNumber2(phoneNumber);
+// // // //     const formattedNumber = cleanAndFormatPhoneNumber2(phoneNumber);
 
-//     console.log("nnn", formattedNumber);
+// // // //     console.log("nnn", formattedNumber);
 
-//     // Generate a verification code for the user
-//     const generatedCode = generateVerificationCode2();
-//     globalVerificationCode = generatedCode;
-//     console.log('Generated Code:', globalVerificationCode);
+// // // //     // Generate a verification code for the user
+// // // //     const generatedCode = generateVerificationCode2();
+// // // //     globalVerificationCode = generatedCode;
+// // // //     console.log('Generated Code:', globalVerificationCode);
 
-//     // Send the verification code message only when the validation conditions are met
-//     const messageCode = `Dear ${firstName},\n\nYour *${role} account* setup is underway. Please use the one-time verification code: *${generatedCode}* to complete the process. This code is valid for 7 minutes.\n\nWelcome to Mota Security Oracle!`;
+// // // //     // Send the verification code message only when the validation conditions are met
+// // // //     const messageCode = `Dear ${firstName},\n\nYour *${role} account* setup is underway. Please use the one-time verification code: *${generatedCode}* to complete the process. This code is valid for 7 minutes.\n\nWelcome to Mota Security Oracle!`;
 
-//     const token2 = process.env.TOKEN;
+// // // //     const token2 = process.env.TOKEN;
 
-//     const options = {
-//       method: 'POST',
-//       url: 'https://gate.whapi.cloud/messages/text',
-//       headers: {
-//         accept: 'application/json',
-//         'content-type': 'application/json',
-//         authorization: `Bearer ${token2}`,
-//       },
-//       data: {
-//         to: `${formattedNumber}@s.whatsapp.net`,
-//         body: messageCode,
-//       },
-//     };
+// // // //     const options = {
+// // // //       method: 'POST',
+// // // //       url: 'https://gate.whapi.cloud/messages/text',
+// // // //       headers: {
+// // // //         accept: 'application/json',
+// // // //         'content-type': 'application/json',
+// // // //         authorization: `Bearer ${token2}`,
+// // // //       },
+// // // //       data: {
+// // // //         to: `${formattedNumber}@s.whatsapp.net`,
+// // // //         body: messageCode,
+// // // //       },
+// // // //     };
 
-//     const response = await axios.request(options);
-//     console.log(response.data);
+// // // //     const response = await axios.request(options);
+// // // //     console.log(response.data);
 
-//     res.status(200).json({ success: true, message: 'Verification code sent successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: 'Error sending Verification' });
-//   } finally {
-//     // Close the MongoDB connection
-//     await client.close();
-//   }
-// });
-
-
-
-
-// ///////////////////////////////////////////////////////////////////////
-// // Function to query MongoDB for all data and log entries
-// async function queryMongoForAllDataAndLog() {
-//   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-
-//   try {
-//     // Connect to MongoDB
-//     await client.connect();
-
-//     // Select the database and collection
-//     const db = client.db(dbName);
-//     const collectionName = 'movement_history_database'; // Replace with your collection name
-//     const collection = db.collection(collectionName);
-
-//     // Your query logic here
-//     // For example, you might query for all documents
-//     const allData = await collection.find({}).toArray();
-
-//     // Log all entries to the console
-//     allData.forEach((entry) => {
-//       console.log('Entry:', entry);
-//     });
-
-//     return allData;
-//   } catch (error) {
-//     console.error('Error querying MongoDB:', error);
-//     throw error;
-//   } finally {
-//     // Close the MongoDB connection when done
-//     client.close();
-//   }
-// }
+// // // //     res.status(200).json({ success: true, message: 'Verification code sent successfully' });
+// // // //   } catch (error) {
+// // // //     console.error(error);
+// // // //     res.status(500).json({ success: false, message: 'Error sending Verification' });
+// // // //   } finally {
+// // // //     // Close the MongoDB connection
+// // // //     await client.close();
+// // // //   }
+// // // // });
 
 
 
 
+// // // // ///////////////////////////////////////////////////////////////////////
+// // // // // Function to query MongoDB for all data and log entries
+// // // // async function queryMongoForAllDataAndLog() {
+// // // //   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
+// // // //   try {
+// // // //     // Connect to MongoDB
+// // // //     await client.connect();
 
+// // // //     // Select the database and collection
+// // // //     const db = client.db(dbName);
+// // // //     const collectionName = 'movement_history_database'; // Replace with your collection name
+// // // //     const collection = db.collection(collectionName);
 
+// // // //     // Your query logic here
+// // // //     // For example, you might query for all documents
+// // // //     const allData = await collection.find({}).toArray();
 
+// // // //     // Log all entries to the console
+// // // //     allData.forEach((entry) => {
+// // // //       console.log('Entry:', entry);
+// // // //     });
 
+// // // //     return allData;
+// // // //   } catch (error) {
+// // // //     console.error('Error querying MongoDB:', error);
+// // // //     throw error;
+// // // //   } finally {
+// // // //     // Close the MongoDB connection when done
+// // // //     client.close();
+// // // //   }
+// // // // }
 
-
-
+////////////////////////////////////////////////////////////////
 
 // // WebSocket server logic
 // wss.on('connection', (ws) => {
@@ -4969,7 +4959,335 @@ const generateVerificationCode = () => {
   const max = Math.pow(10, codeLength) - 1;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+////////////////////////////////////////////////////////////////////////
 
+
+
+
+const verifyCode = (enteredCode, generatedCode) => {
+  return enteredCode.toString() === generatedCode.toString();
+};
+
+const authenticateUser = (req, res, next) => {
+  const token = req.header('Authorization');
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized - Missing token' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    req.user = decoded.user;
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+  }
+};
+
+// Authorization middleware
+const authorizeUser = (roles) => {
+  return (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+      next();
+    } else {
+      return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
+    }
+  };
+};
+
+
+// Sample users with configured roles and phone numbers
+const configuredUsers = [
+  { phoneNumber: '1234567890', configuredRole: 'receptionist' },
+  { phoneNumber: '9876543210', configuredRole: 'security' },
+  // Add more users as needed
+];
+
+///////with harshing////////////////////////////////////////
+// Check login status endpoint
+app.get('/check_login_status', (req, res) => {
+  // Check if the user is logged in based on the session
+  if (req.session && req.session.userId) {
+      // User is logged in
+      res.status(200).send('User logged in');
+  } else {
+      // User is not logged in
+      res.status(401).send('User not logged in');
+  }
+});
+
+
+
+// Logout endpoint
+app.post('/logout', (req, res) => {
+  // Clear session data
+  req.session.destroy(err => {
+      if (err) {
+          console.error('Error destroying session:', err);
+          res.status(500).json({ message: 'Error logging out' });
+      } else {
+          // Respond with a success message
+          res.status(200).json({ message: 'Logout successful' });
+      }
+  });
+});
+
+
+app.post('/register', async (req, res) => {
+  console.log('Received Registration Request:', req.body);
+
+  const { phoneNumber, selectedRole, verificationCode, name, email, password, confirmPassword } = req.body;
+
+  if (!phoneNumber || !selectedRole || !name || !email || !password || !confirmPassword) {
+    console.log('Validation Failed - Missing Parameters');
+    return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+  }
+
+  const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const db = client.db("olukayode_sage");
+    const collection = db.collection('user_config_databse');
+    const collection2 = db.collection('registered_user_config_database');
+    const userConfig = await collection.findOne({ phoneNumber });
+
+    if (!userConfig) {
+      console.log('Access Denied - Phone number not configured for any role');
+      return res.status(403).json({ message: 'Access Denied - Phone number not configured for any role' });
+    }
+
+    if (selectedRole !== userConfig.configuredRole) {
+      console.log('Access Denied - Invalid account type');
+      return res.status(403).json({ message: 'Access Denied - Invalid account type' });
+    }
+
+    console.log("Entered code:", verificationCode);
+    console.log("Generated code:", globalVerificationCode);
+
+    // Add more logging to see the comparison result
+    const isValidVerificationCode = verifyCode(verificationCode, globalVerificationCode);
+    console.log('Is Valid Verification Code:', isValidVerificationCode);
+
+    if (!isValidVerificationCode) {
+      console.log('Access Denied - Invalid verification code');
+      return res.status(403).json({ message: 'Access Denied - Invalid verification code' });
+    }
+
+    // Hash the password before storing it in the database
+    const hashedPassword = await bcrypt.hash(password, 10); // Use an appropriate saltRounds value
+
+    // Save user details along with the hashed password in the database
+    const result = await collection2.insertOne({
+      _id: new ObjectId(),
+      name,
+      email,
+      phoneNumber,
+      configuredRole: selectedRole,
+      configured: true,
+      passwordHash: hashedPassword,
+    });
+
+    const token = jwt.sign({ phoneNumber, selectedRole }, secretKey, { expiresIn: '7m' });
+    console.log('Registration successful - Token:', token);
+    res.status(200).json({ message: 'Registration successful', token, verificationCode: globalVerificationCode });
+    // res.redirect('/index.html'); 
+  } catch (error) {
+    console.error(error);
+    // res.status(500).json({ message: 'Error registering user' });
+  } finally {
+    await client.close();
+  }
+});
+
+
+
+
+app.post('/configureUserAccount', async (req, res) => {
+  const { phoneNumber, configuredRole } = req.body;
+
+  // Validate input
+  if (!phoneNumber || !configuredRole) {
+    console.log('Validation Failed - Missing Parameters');
+    return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+  }
+
+  // Normalize the phone number before processing
+  const cleanedPhoneNumber = phoneNumber.replace(/\D/g, ''); // Remove non-numeric characters
+  const normalizedPhoneNumber = cleanedPhoneNumber.startsWith('0') ? `+234${cleanedPhoneNumber.slice(1)}` : `+234${cleanedPhoneNumber}`;
+
+  // Create a new MongoClient
+  const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    // Connect to MongoDB
+    await client.connect();
+
+    // Select the database and collection
+    const db = client.db(dbName);
+    const collectionName = 'user_config_databse'; // Replace with your collection name
+    const collection = db.collection(collectionName);
+
+    // Check if the user is already configured
+    const existingUser = await collection.findOne({ phoneNumber: normalizedPhoneNumber });
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Bad Request - Phone number already configured for ' + existingUser.configuredRole });
+    }
+
+    // Save user configuration status to MongoDB
+    await collection.insertOne({ phoneNumber: normalizedPhoneNumber, configuredRole, configured: true });
+
+    res.status(200).json({ message: 'User account configured successfully' });
+  
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error configuring user account' });
+  } finally {
+    // Close the MongoDB connection
+    await client.close();
+  }
+});
+
+
+
+
+let globalVerificationCode = "";
+
+// Move the function to the global scope
+const generateVerificationCode2 = () => {
+  const codeLength = 4; // Adjust the code length as needed
+  const min = Math.pow(10, codeLength - 1);
+  const max = Math.pow(10, codeLength) - 1;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+app.post('/generateVerificationCode', async (req, res) => {
+  // Log the received parameters for debugging
+  console.log('Received Parameters:', req.body);
+
+  const { phoneNumber, verificationCode, name, email, password, confirmPassword, role } = req.body;
+
+  // Validate input
+  if (!phoneNumber || !name || !email || !password || !confirmPassword || !role) {
+    console.log('Validation Failed - Missing Parameters');
+    return res.status(400).json({ message: 'Bad Request - Missing parameters' });
+  }
+
+  // Check if password matches confirm password
+  if (password !== confirmPassword) {
+    console.log('Validation Failed - Passwords do not match');
+    return res.status(400).json({ message: 'Bad Request - Passwords do not match' });
+  }
+
+  // Create a new MongoClient
+  const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    // Connect to MongoDB
+    await client.connect();
+    const database = client.db('olukayode_sage');
+    const collection = database.collection('user_config_databse');
+
+    // Check if the user is configured
+    const user = await collection.findOne({ phoneNumber, configured: true });
+
+    if (!user) {
+      console.log('User not configured. Cannot generate verification code.');
+      return res.status(400).json({ message: 'Bad Request - User not configured' });
+    }
+
+    // Extract the first name or the first word of the name
+    const firstName = name.split(' ')[0];
+
+    // Check if phoneNumber is a string before attempting to clean and format it
+    const cleanAndFormatPhoneNumber2 = (phoneNumber) => {
+      if (typeof phoneNumber !== 'string') {
+        console.error('Invalid phoneNumber:', phoneNumber);
+        return phoneNumber;
+      }
+
+      const cleanedNumber = phoneNumber.replace(/\D/g, '');
+      const formattedNumber = cleanedNumber.startsWith('234') ? cleanedNumber : `234${cleanedNumber.slice(1)}`;
+      return formattedNumber;
+    };
+
+    const formattedNumber = cleanAndFormatPhoneNumber2(phoneNumber);
+
+    console.log("nnn", formattedNumber);
+
+    // Generate a verification code for the user
+    const generatedCode = generateVerificationCode2();
+    globalVerificationCode = generatedCode;
+    console.log('Generated Code:', globalVerificationCode);
+
+    // Send the verification code message only when the validation conditions are met
+    const messageCode = `Dear ${firstName},\n\nYour *${role} account* setup is underway. Please use the one-time verification code: *${generatedCode}* to complete the process. This code is valid for 7 minutes.\n\nWelcome to Mota Security Oracle!`;
+
+    const token2 = process.env.TOKEN;
+
+    const options = {
+      method: 'POST',
+      url: 'https://gate.whapi.cloud/messages/text',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        authorization: `Bearer ${token2}`,
+      },
+      data: {
+        to: `${formattedNumber}@s.whatsapp.net`,
+        body: messageCode,
+      },
+    };
+
+    const response = await axios.request(options);
+    console.log(response.data);
+
+    res.status(200).json({ success: true, message: 'Verification code sent successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error sending Verification' });
+  } finally {
+    // Close the MongoDB connection
+    await client.close();
+  }
+});
+
+
+
+///////////////////////////////////////////////////////////////////////
+// Function to query MongoDB for all data and log entries
+async function queryMongoForAllDataAndLog() {
+    const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  
+    try {
+      // Connect to MongoDB
+      await client.connect();
+  
+      // Select the database and collection
+      const db = client.db(dbName);
+      const collectionName = 'movement_history_database'; // Replace with your collection name
+      const collection = db.collection(collectionName);
+  
+      // Your query logic here
+      // For example, you might query for all documents
+      const allData = await collection.find({}).toArray();
+  
+      // Log all entries to the console
+      allData.forEach((entry) => {
+        console.log('Entry:', entry);
+      });
+  
+      return allData;
+    } catch (error) {
+      console.error('Error querying MongoDB:', error);
+      throw error;
+    } finally {
+      // Close the MongoDB connection when done
+      client.close();
+    }
+  }
 
 
 const server = app.listen(port, () => console.log(`Server listening on port ${port}!`));
